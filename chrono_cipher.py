@@ -40,11 +40,11 @@ def encrypt(text: str, shift: int) -> str:
     # result = "" 
     chars = [] # Build a list instead of a string to reduce the time complexity to always O(n), guaranteed.
     for char in text:
-        if char.islower():
+        if "a" <= char <= "z":
             # shift lowercase and use 97 (unicode point for 'a') as the base
             # result += chr((ord(char) - 97 + shift) % 26 + 97)
             chars.append(chr((ord(char) - 97 + shift) % 26 + 97))
-        elif char.isupper():
+        elif "A" <= char <= "Z":
             # shift uppercase and use 65 (unicode point for 'A') as the base
             # result += chr((ord(char) - 65 + shift) % 26 + 65)
             chars.append(chr((ord(char) - 65 + shift) % 26 + 65))
@@ -99,6 +99,11 @@ if __name__ == "__main__":
 
     # Negative path: malformed payload should raise ValueError, not silently
     # return garbage. We assert the error fires AND that it's the right type.
+    assert encrypt("д", 3) == "д"
+    assert encrypt("hello д", 3) == "khoor д"
+    assert encrypt("ñ", 5) == "ñ"           # accented, non-ASCII
+    assert encrypt("K", 1) == "L"            # ASCII uppercase still works
+
     try:
         decrypt_with_time("no-brackets")
         raise AssertionError("should have raised ValueError")

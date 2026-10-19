@@ -1,16 +1,20 @@
 def encrypt(text: str, shift: int) -> str:
-    result = ""
+    # result = "" 
+    chars = [] # Build a list instead of a string to reduce the time complexity to always O(n), guaranteed.
     for char in text:
         if char.islower():
             # shift lowercase and use 97 (unicode point for 'a') as the base
-            result += chr((ord(char) - 97 + shift) % 26 + 97)
+            # result += chr((ord(char) - 97 + shift) % 26 + 97)
+            chars.append(chr((ord(char) - 97 + shift) % 26 + 97))
         elif char.isupper():
             # shift uppercase and use 65 (unicode point for 'A') as the base
-            result += chr((ord(char) - 65 + shift) % 26 + 65)
+            # result += chr((ord(char) - 65 + shift) % 26 + 65)
+            chars.append(chr((ord(char) - 65 + shift) % 26 + 65))
         else:
             # if not a letter, leave it as is
-            result += char
-    return result
+            # result += char
+            chars.append(char)
+    return "".join(chars)
 
 def decrypt(text: str, shift: int) -> str:
     return encrypt(text, -shift)

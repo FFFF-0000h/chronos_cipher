@@ -13,6 +13,14 @@ def encrypt(text: str, shift: int) -> str:
     return result
 
 def decrypt(text: str, shift: int) -> str:
+    return encrypt(text, -shift)
+
+"""
+#
+# DRY (DO NOT REPEAT YOURSELF)
+# decrypt() differs from encrypt() by only `- shift`
+#
+def decrypt(text: str, shift: int) -> str:
     result = ""
     for char in text:
         if char.islower():
@@ -25,7 +33,7 @@ def decrypt(text: str, shift: int) -> str:
             # if not a letter, leave it as is
             result += char
     return result
- 
+"""
 
 def main():
     text = input("Enter a text: ")
